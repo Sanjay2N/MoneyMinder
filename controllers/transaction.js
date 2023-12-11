@@ -69,7 +69,7 @@ exports.getUserTransactions=async(req,res)=>{
             }
             else{
                 const start=new Date(periodRange.getFullYear()-1,12,1);
-                const end=new Date(periodRange.getFullYear(),12,1);
+                const end=new Date(periodRange.getFullYear(),12,0);
                 dateRangeCondition={date:{[Op.between] :[start ,end]}};
             }
         }
