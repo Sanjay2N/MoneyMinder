@@ -39,8 +39,6 @@ profileButton.onclick=async function(e){
 }
 
 function logOut(){
-    console.log("inside of the logout")
-
     localStorage.removeItem("token");
 }
 
@@ -76,7 +74,6 @@ incomeForm.addEventListener("submit",addTransaction);
 expenseForm.addEventListener("submit",addTransaction);
 async function addTransaction(e){
     try{
-        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
         e.preventDefault();
         const amount=e.target.amount.value;
         const date=e.target.date.value;
@@ -112,7 +109,6 @@ async function addTransaction(e){
 
 
 // page loading /page refresh 
-// window.addEventListener("DOMContentLoaded",getTransaction);
 getTransaction(1);
 const pagination=document.querySelector("#pagination");
 const noTransactionMessage=document.querySelector("#no-transaction-message");

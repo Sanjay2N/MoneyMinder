@@ -6,26 +6,19 @@ const { use } = require("../routes/user");
 
 exports.getMainPage = async(req, res) => {
     try{
-        
-    // const isPremiumUser=req.query.ispremiumuser;
-    // const id=req.query.id;
-    // const user=await User.findOne({where:{id:id}});
-    // if(String(user.ispremiumuser)!==isPremiumUser){
-    //     return res.status(400).res({message:"wrong inputs"});
-    // }
-
-    // if(isPremiumUser==='true'){
-    //     return res.sendFile('premiumUserMainPage.html', { root: 'views' });
-    // }
-    return res.sendFile('mainPage.html', { root: 'views' });
-}
-
-catch(error){
-    console.log(error);
-}
+        return res.sendFile('mainPage.html', { root: 'views' });
+    }
+    catch(error){
+        console.log(error);
+    }
 }
 exports.getPremiumMainPage=(req,res)=>{
-    return res.sendFile('premiumUserMainPage.html', { root: 'views' });
+    try{
+        return res.sendFile('premiumUserMainPage.html', { root: 'views' });
+    }
+    catch(error){
+        console.log(error);
+    }
     
 }
 
@@ -52,8 +45,8 @@ exports.userSignup=async(req,res)=>{
         }
         const saltrounds=10;
         bcrypt.hash(password,saltrounds,async(err,hash)=>{
-        const response=await userServices.createUser(name,phoneNumber,email,hash);
-        return res.status(201).json(response);
+        await userServices.createUser(name,phoneNumber,email,hash);
+        return res.status(201).json({message:"successfull"});
     })
     }
     catch(error){

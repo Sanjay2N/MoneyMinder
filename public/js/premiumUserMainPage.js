@@ -18,13 +18,11 @@ profileButton.onclick=async function(e){
         profileCard.querySelector("#user-income").innerText=totalIncome;
     }
     catch(error){
-        console.log("inside")
         console.log(error)
     }
 }
 
 function logOut(){
-    console.log("inside of the logout")
     localStorage.removeItem("token");
 }
 
@@ -88,7 +86,7 @@ async function download(event){
         if(response.status === 200){
             var a = document.createElement("a");
             a.href = response.data.fileURL;
-            a.download = 'mytransaction.csv';
+            a.download = 'mytransaction.txt';
             a.click();
     }
     }

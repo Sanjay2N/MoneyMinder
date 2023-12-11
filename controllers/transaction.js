@@ -19,7 +19,6 @@ exports.addUserTransaction=async (req,res)=>{
     const t= await sequelize.transaction();
     try{
         const {amount,date,paymentmethod,category,description,type}=req.body;
-        console.log("list  ",[amount,date,paymentmethod,category,type])
         if(isStringsNotValidate([amount,date,paymentmethod,category,type])){
             return res.status(400).json({message:"some thing missing"});
         }
@@ -55,7 +54,6 @@ exports.getUserTransactions=async(req,res)=>{
     try{
         const ITEMS_PER_PAGE=parseInt(req.query.noItems);
         const page=parseInt(req.query.page);
-        console.log(ITEMS_PER_PAGE,page)
         const isPremiumUser=req.user.dataValues.ispremiumuser;
         let dateRangeCondition={};
         if(isPremiumUser){
