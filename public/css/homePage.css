@@ -1,0 +1,91 @@
+
+body{
+    background-color: #e6f7ec !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+/* navbar  ..........................................*/
+.nav {
+    font-family: 'Hedvig Letters Serif', serif !important;
+}
+
+#navmenu #signup:hover,#navmenu #login:hover{
+    color: rgba(0, 255, 145, 0.686) !important;
+}
+
+
+#logo{
+    cursor: pointer;
+    font-weight:400;
+}
+
+
+/* home page body ............................................................. */
+
+#slogen{
+    color:#0ac46a !important ;
+    font-weight:900!important;
+    font-size: 40px !important;
+}
+
+
+
+/* signup form div .................................................... */
+
+
+
+  #signup-body{
+    margin-top: 8%;
+    width: 30%;
+
+  }
+  
+  /* login form div.......................................................... */
+  #login-body{
+    margin-top: 8%;
+    width:30%;
+  }
+/* forget password ........................................................... */
+ 
+  #forget-password-body{
+    margin-top: 8%;
+    width:30%;
+  }
+
+  /* reset passeord */
+  #reset-password-body{
+    margin-top: 8%;
+    width:30%;
+  }
+  
+  
+  
+  
+  @media (max-width:576px) {
+    #signup-body{
+      margin-top: 15%;
+      width: 85%;
+    }
+    #login-body{
+      margin-top: 30%;   
+      width: 85%;
+    }
+  
+    
+    #forget-password-body{
+      margin-top: 40%;
+      width: 85%;
+    }
+    #reset-password-body{
+        margin-top: 40%;
+        width:85%;
+      }
+  
+  }
+
+  @media (min-width:576px) {
+    body{
+        overflow: hidden;
+
+    }
+}

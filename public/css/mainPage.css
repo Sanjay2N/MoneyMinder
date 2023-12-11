@@ -1,0 +1,163 @@
+body{
+  background-color: #e6f7ec !important;
+  scroll-behavior: smooth;
+}
+ 
+/* navbar */
+.nav {
+  font-family: 'Hedvig Letters Serif', serif !important;
+}
+nav{
+  text-align: center;
+  position: fixed !important;
+  width: 100%;
+}
+#navbar{
+  height: 10%;
+}
+
+/* premium button */
+.styled-button {
+  background-color: #000; 
+  color: #ffd700; 
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 2px solid #ffd700; 
+  border-radius: 18px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+
+.styled-button:hover {
+  background-color: #1a1a1a; 
+}
+ #rzp-button1{
+  border-color:#c28904 ;
+  border-width: 4px;
+  /* color: #c28904; */
+} */
+
+#navbar #profile-icon{
+  color:#09147d ;
+}
+
+#navbar #profile-icon{
+  color:#09147d ;
+}
+
+#navbar .dropdown-menu a:hover{
+  border-radius: 5%;
+  color: white ;
+  background-color: #5ca650 ;
+}
+
+#profile-modal{
+  font-weight:550;
+  font-size: 17px;
+  font-family:'Times New Roman', Times, serif; 
+  height: fit-content;
+}
+
+#profile-modal #basic-title{
+  color: #0816d1 ;
+  font-family: 'Times New Roman',serif;
+  font-weight: bold;
+  font-size: medium;
+}
+#profile-modal h6{
+  font-style: normal;
+  font-weight: 550;
+}
+
+
+#home-button{
+  cursor: pointer;
+}
+
+#profile-dropdown{
+  position: absolute;
+  left: 88%;
+}
+
+
+/* table  */
+/* transaction table */
+#transaction-body{
+  background-color: white;
+  /* width: 75%; */
+
+}
+#transaction-table-div{
+  width: 75% !important;
+  font-family: 'Open Sans', sans-serif !important;
+
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+
+
+/* transaction modal  */
+#transactionModel #income-button{
+  background-color: white;
+  color: black;
+}
+
+#transactionModel  #expense-button{
+  background-color: red;
+  color: white;
+}
+
+#profile-modal img {
+  border-radius: 50%;
+}
+
+/* //transaction list  */
+/* modal styling */
+.modal-header {
+  border: none !important;
+}
+
+/* profile section */
+@media  (min-width: 576px)
+{
+  .modal-dialog-end{
+		right:-32%;
+		-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+		   -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+		     -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+		        transition: opacity 0.3s linear, left 0.3s ease-out;
+
+	
+}
+#profile-modal{
+  right: 0;
+  
+}
+#profit-modal-section{
+  width: 30%;
+}
+
+
+}
+
+@media (max-width:576px) {
+#transaction-table-div{
+  width: 93% !important;
+}
+  #profile-dropdown {
+    right: 0 !important;
+    left: auto !important;
+  }
+  
+}
+
+
+/* pagination input  */
+#trans-per-page-div{
+  width: 31%;
+  background-color:#748893;
+}

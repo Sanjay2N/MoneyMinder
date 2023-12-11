@@ -1,0 +1,444 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mainPage.css">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>MoneyMinder</title>
+</head>
+<body class="text-bg-info bg-opacity-25">
+<!-- nav bar -->
+  <div id="navbar"  >
+    <nav class="navbar navbar-expand-lg bg-white " >
+        <div class="container-fluid">
+          <a class="navbar-brand fs-4 p" id="home-button" onclick="window.location.reload()" >
+            <img src="/images/logo4.png" alt="Logo" width="55" height="45" class="d-inline-block align-text-top">
+            <span class="text-danger mx-auto pt-5 ">Money<span class="text-primary mx-auto pt-5">Minder</span></span>
+          </a>
+          <div id="nav-items">
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+              <ul class="navbar-nav ms-auto" style="font-size:large;"> 
+                <li class="nav-item me-2 mt-1" id="premium-button">
+                  <button class=" styled-button my-0 py-1  fs-6"><em>Premium</em></button>
+                </li>
+                <li class="nav-item ">
+                  <a href="#" class="nav-link  " data-bs-toggle="dropdown" id="profile-icon"><i class='far fa-user-circle' style='font-size:28px'></i></a>
+                <div id="profile-dropdown">
+                  <ul class="dropdown-menu " >
+                    <li><a class="dropdown-item my-0"  id="profile-button" data-toggle="modal" data-target="#profile-modal" href="#" >Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item my-0" id="logout-button" href="/home" onclick="logOut()">Log Out</a></li>
+                  </ul>
+                </div>
+                </li>
+              </ul>
+            </div>
+            </div>
+        </div>
+      </nav>
+    </div>
+
+
+<div  id="transation-body">
+  <div class="container table-responsive text-bg-primary bg-opacity-25 mb-5 mt-4 border border-3  rounded-2 " id="transaction-table-div">
+    <table class="table " id="transaction-table">
+        <div class="d-flex ">
+          <h4 class="text-center fst-italic pt-3 text-black text-nowrap ms-md-3">
+              Transaction Table
+          </h4>
+        </div>
+        <thead class="table-danger table-bordered border-3">
+          <tr class="nowrap">
+            <th scope="col" class="col-md-2">Date</th>
+            <th scope="col" class="col-md-2">Amount</th>
+            <th scope="col" class="col-md-2">Method</th>
+            <th scope="col" class="col-md-2">Category</th>
+            <th scope="col" class="col-md-1">Edit</th>
+            <th scope="col" class="col-md-1">Delete</th>
+          </tr>
+        </thead>
+        <tbody id="transaction-body">
+
+        </tbody>
+    </table>
+</div>
+<div id="no-transaction-message" class="d-flex justify-content-center"></div>
+    
+
+<!-- transaction modal  -->
+  <div>
+    <button  type="button" data-toggle="modal" data-target="#transactionModel" class="position-fixed  translate-middle  btn  btn-primary pt-0 pb-0 " style="position: absolute ;right: 3%;bottom: 7%;"><i class="fa fa-plus py-2" aria-hidden="true" style="font-size: 150%;"></i></button>
+  </div>
+  
+  <div class="d-block col-2 position-relative start-50" >
+      <div class="btn-group btn-sm " id="pagination">
+   
+      </div>
+  </div>
+    
+  <div class=" w-50 d-none d-lg-block position-absolute  bottom-0 "  id="pagination-input"> 
+      <h6 class="mx-3  text-white  p-1 rounded "  id="trans-per-page-div">Transactions per page  <select id="transactions-per-page" name="transactionsperpage" value="" class="form-select form-select-sm form-control  d-inline" style="width: 60px;">
+        <option disabled selected value></option>
+        <option value=5>5</option>
+        <option value=10>10</option>
+        <option value=15>15</option>
+        <option value=20>20</option>
+  
+      </select></h6>
+  
+    </div>
+  </div>
+  <div class="col-md-4 mt-5 text-center mx-auto d-none"  id="premium-div">
+    <div class="card text-bg-dark bg-opacity-75">
+        <div class="card-header">
+            <h4 class="text-center" style="color:rgb(222, 206, 26);">Premium Features</h4>
+        </div>
+        <div class="card-body ">
+            <ul class="list-group list-group fw-medium">
+                <li class="list-group-item"><i class="fas fa-check-circle" style="color: #30e718;"></i>  Transaction Filter</li>
+                <li class="list-group-item"><i class="fas fa-check-circle" style="color: #30e718;"></i>  Income & Expense Overview</li>
+                <li class="list-group-item"><i class="fas fa-check-circle" style="color: #30e718;"></i>  Income & Expense Statastics</li>
+                <li class="list-group-item"><i class="fas fa-check-circle" style="color: #30e718;"></i>  Transaction Reports</li>
+                <li class="list-group-item "><i class="fas fa-check-circle" style="color: #30e718;"></i></i>  LeaderBoard</li>
+                <li class="list-group-item"><i class="fas fa-check-circle" style="color: #30e718;"></i>  Interactive UI</li>
+            </ul>
+        </div>
+    </div>
+    <a href="#" class="btn bg-white text-black fs-6 fw-bold py-1 rounded-2 mt-4" id="rzp-button1">Buy Premium</a>
+
+</div>
+    <!-- transaction model -->
+<div class="modal fade"  id="transactionModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="form"> 
+      <div class="modal-content justify-content-center col-md-10  "> 
+          <div class="modal-body " id="transaction-modal-body"> 
+              <ul class="nav md-pills nav-justified pills-info"> 
+                  <li class="nav-item "> <a class="nav-link border-rounded rounded show active fs-3 " data-toggle="tab" href="#expense-div" role="tab" id="expense-button"  aria-selected="true"><h6 class="fs-5 fst-italic">Expense</h6></a> </li> 
+                  <li class="nav-item"> <a class="nav-link border-rounded rounded fs-3 " data-toggle="tab" href="#income-div" role="tab" id="income-button" aria-selected="false"><h6 class="fs-5 fst-italic">Income</h6></a> </li> 
+              </ul> 
+              <!-- Income Modal -->
+              <div class="tab-content py-0"> 
+                  <div class="tab-pane fade text-dark" id="income-div" role="tabpanel"> 
+                      <form id="income-form" class="text-dark" action=""  method="" name="income-form"> 
+                          <p class="status"></p> 
+                          
+                          <div class="mb-2 text-dark">
+                              <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                              <input type="number" class="form-control" id="amount" aria-describedby="amount spent">
+                          </div>
+                          <div class="form-group mb-2">
+                              <label for="paymentmethod"><h6>Payment Method</h6></label>
+                              <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                                  <option disabled selected value="">Select a payment method</option>
+                                  <option value="Cash">Cash</option>
+                                  <option value="Bank">Bank</option>
+                                  <option value="UPI">UPI</option>
+                                  <option value="Others">Others</option>
+                              </select>
+
+                          </div>
+                          <div class="mb-2">
+                              <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                              <input type="date" class="form-control Idate"  id="date" aria-describedby="date">
+                          </div>
+                          <div class="mb-2">
+                              <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                              <select id="category" name="category" class="form-select form-control">
+                                  <option disabled selected value="">Select a category</option>
+                                  <option value="Salary">Salary</option>
+                                  <option value="Bonus">Bonus</option>
+                                  <option value="Allowance">Allowance</option>
+                                  <option value="Tips">Tips</option>
+                                  <option value="Dividend">Dividend</option>
+                                  <option value="Other">Other</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                              <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                              <input type="text" class="form-control" id="description" aria-describedby="description">
+                          </div>
+                          <input type="hidden" id="type"  value="income">
+                          <div class="text-center ">
+                              <button type="submit" class="btn btn-primary " id="save-income" >Save</button>
+                              <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-dismiss="modal">Close</button> 
+                          </div>
+                          </form> 
+                      </div>
+
+              <!-- Expense modal -->
+              <div class="tab-pane fade active show mt-3 " id="expense-div" role="tabpanel"> 
+                  <form id="expense-form" class="" action="" method="post" name="expense-form"> 
+                      
+                      <div class="mb-2">
+                          <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                          <input type="number" class="form-control" id="amount"  aria-describedby="amount spent">
+                      </div>
+                      <div class="form-group mb-2">
+                          <label for="paymentmethod"><h6>Payment Method</h6></label>
+                          <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                              <option disabled selected value="">Select a payment method</option>
+                              <option value="Cash">Cash</option>
+                              <option value="Bank">Bank</option>
+                              <option value="Card">Card</option>
+                              <option value="UPI">UPI</option>
+                              <option value="Others">Others</option>
+                          </select>
+
+                      </div>
+                      <div class="mb-2">
+                          <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                          <input type="date" class="form-control Edate"  id="date" aria-describedby="date">
+                      </div>
+                      <div class="mb-2">
+                          <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                          <select id="category" name="category2" class="form-select form-control">
+                              <option disabled selected value="">Select a category</option>
+                              <option value="Education">Education</option>
+                              <option value="Clothing">Clothing</option>
+                              <option value="Bills">Bills</option>
+                              <option value="Fuel">Fuel</option>
+                              <option value="Entertainment">Entertainment</option>
+                              <option value="Fitness">Fitness</option>
+                              <option value="Food">Food</option>
+                              <option value="Health">Health</option>
+                              <option value="Shopping">Shopping</option>
+                              <option value="Travel">Travel</option>
+                              <option value="Other">Other</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                          <input type="text" class="form-control" id="description" aria-describedby="description">
+                      </div>
+                      <input type="hidden" id="type" value="expense">
+                      <div class="text-center ">
+                      <button type="submit" class="btn btn-primary " id="save-expense">Save</button>
+                      <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-dismiss="modal">Close</button> 
+
+                      </div>
+                  </form>
+              </div> 
+          </div> 
+      </div> 
+  
+  </div> 
+</div>
+</div>
+
+
+<!-- expense modal -->
+<div class="modal fade"  id="edit-expense-modal" tabindex="-1" role="dialog" aria-labelledby="expense modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered " role="form">
+    <div class="modal-content col-md-10 ">
+      <div class=" text-center justify-content-center d-flex mt-2">
+        <h6 class="modal-title  p-1 fs-5 fw-normal fst-italic w-75 text-white rounded" id="exampleModalLongTitle" style="background-color: red;">Expense</h6>
+      </div>
+      <div class="modal-body mt-0">
+          <form id="edit-expense-form" class="" action="" method="post" name="edit-expense-form"> 
+                
+              <div class="mb-2">
+                  <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                  <input type="number" class="form-control" id="amount"  aria-describedby="amount spent">
+              </div>
+              <div class="form-group mb-2">
+                  <label for="paymentmethod"><h6>Payment Method</h6></label>
+                  <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                      <option disabled selected value="">Select a payment method</option>
+                      <option value="Cash">Cash</option>
+                      <option value="Bank">Bank</option>
+                      <option value="Card">Card</option>
+                      <option value="UPI">UPI</option>
+                      <option value="Others">Others</option>
+                  </select>
+
+              </div>
+              <div class="mb-2">
+                  <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                  <input type="date" class="form-control"  id="date" aria-describedby="date">
+              </div>
+              <div class="mb-2">
+                  <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                  <select id="category" name="category2" class="form-select form-control">
+                      <option disabled selected value="">Select a category</option>
+                      <option value="Education">Education</option>
+                      <option value="Clothing">Clothing</option>
+                      <option value="Bills">Bills</option>
+                      <option value="Fuel">Fuel</option>
+                      <option value="Entertainment">Entertainment</option>
+                      <option value="Fitness">Fitness</option>
+                      <option value="Food">Food</option>
+                      <option value="Health">Health</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Other">Other</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                  <input type="text" class="form-control" id="description" aria-describedby="description">
+              </div>
+              <input type="hidden" id="type" value="expense">
+              <div class="text-center ">
+              <button type="submit" class="btn btn-primary " id="save-expense">Save</button>
+              <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-bs-dismiss="modal">Close</button> 
+
+              </div>
+          </form>
+          </div>
+      </div>
+     
+    </div>
+  </div>
+
+
+   <!-- income modal -->
+   <div class="modal fade"  id="edit-income-modal" tabindex="-1" role="dialog" aria-labelledby="income modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="form">
+      <div class="modal-content col-md-10 ">
+        <div class=" text-center justify-content-center d-flex mt-2">
+          <h6 class="modal-title p-1 fs-5 fw-normal fst-italic w-75 text-white rounded" id="exampleModalLongTitle" style="background-color: #1974D2;">Income</h6>
+        </div>
+        <div class="modal-body mt-0">
+            <form id="edit-income-form" class="text-dark" action=""  method="" name="edit-income-form"> 
+                <p class="status"></p> 
+                
+                <div class="mb-2 text-dark">
+                    <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                    <input type="number" class="form-control" id="amount" aria-describedby="amount spent">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="paymentmethod"><h6>Payment Method</h6></label>
+                    <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                        <option disabled selected value="">Select a payment method</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Others">Others</option>
+                    </select>
+
+                </div>
+                <div class="mb-2">
+                    <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                    <input type="date" class="form-control "  id="date" aria-describedby="date">
+                </div>
+                <div class="mb-2">
+                    <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                    <select id="category" name="category" class="form-select form-control">
+                        <option disabled selected value="">Select a category</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Bonus">Bonus</option>
+                        <option value="Allowance">Allowance</option>
+                        <option value="Tips">Tips</option>
+                        <option value="Dividend">Dividend</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                    <input type="text" class="form-control" id="description" aria-describedby="description">
+                </div>
+                <input type="hidden" id="type"  value="income">
+                <div class="text-center ">
+                    <button type="submit" class="btn btn-primary " id="save-income" >Update</button>
+                    <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-bs-dismiss="modal">Close</button> 
+                </div>
+                </form> 
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- transaction details popup window -->
+<div class="modal fade" id="transaction-details-modal" tabindex="-1" role="dialog" aria-labelledby="transaction details" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-4" id="exampleModalLabel">Transaction Details</h5>
+        </div>
+        <div class="modal-body" id="detailsmodalbody">
+            <div class="d-flex">
+                <h6 class="text-secondary">Amount :</h6><h6 id="amount"></h6>
+            </div>
+            <div class="d-flex">
+                <h6 class="text-secondary">Payment Method :</h6><h6 id="paymentmethod"></h6>
+            </div>
+            <div class="d-flex">
+                <h6 class="text-secondary">Date :</h6><h6 id="date"></h6>
+            </div>
+            <div class="d-flex">
+                <h6 class="text-secondary">Category :</h6><h6 id="category"></h6>
+            </div>
+            <div class="d-flex">
+                <h6 class="d-flex text-secondary" >Description :</h6><h6 id="description"></h6>
+            </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!--profile Modal -->
+  <div class="modal fade " id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="user profile" aria-hidden="true">
+    <div class="modal-dialog  modal-fullscreen-md-down modal-dialog-end"  id="profit-modal-section" role="document">
+      <div class="modal-content " >
+        <div class="modal-header ms-0 py-0 mt-1">
+          <div class="py-1 px-2   rounded-circle  " id="premium-div">
+            <h6   id="basic-title "  class="fs-6">Basic User</h6>
+          </div>
+
+          <button type="button" class="btn-close btn" data-dismiss="modal" aria-label="Close">
+           </button>
+        </div>
+        <div class="modal-body">
+          <div class="container m-auto>
+            <div class="card col-7" style="width: 22rem;" id="profile-card">
+              <img src="/images/person.jpg" class="card-img-top rounded-circle rounded mb-3 mt-n3" alt="Profile Image">
+              <div class="card-body justify-content-center d-flex">
+                <h4 class="card-title text-primary" id="user-name"></h4>
+              </div>
+              <ul class="list-group list-group-flush ml-n5 w-100">
+                <li class="list-group-item text-secondary">Email : <h6  id="user-email"  class=" d-inline ms-2 text-black fs-6"></h6></li>
+                <li class="list-group-item text-secondary">Phone Number : <h6 id="user-number" class="d-inline ms-2 text-black"></h6></li>
+                <li class="list-group-item text-secondary">Total Expense : <h6 id="user-expense" class=" d-inline ms-2 text-danger "></h6></li>
+                <li class="list-group-item text-secondary">Total Income : <h6 id="user-income" class=" d-inline ms-2 text-primary"></h6></li>
+              </ul>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="/js/mainPage.js"></script>
+<script src="/js/purchase.js"></script>
+</body>
+</html>
+
+
+
+
+
+

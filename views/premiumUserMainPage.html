@@ -1,0 +1,549 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/premiumMainPage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <title>MoneyMinder</title>
+</head>
+<body class="text-bg-info bg-opacity-25">
+<!-- nav bar -->
+  <div id="navbar" class="navbar-default navbar-static-top">
+    <nav class="navbar navbar-expand-lg bg-white" >
+        <div class="container-fluid">
+          <a class="navbar-brand fs-4 p" id="home-button" onclick="window.location.reload()" >
+            <img src="/images/logo4.png" alt="Logo" width="55" height="45" class="d-inline-block align-text-top">
+            <span class="text-danger mx-auto pt-5 ">Money<span class="text-primary mx-auto pt-5">Minder</span></span></a>
+            <div id="nav-items">
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto" style="font-size:large;"> 
+                  <li class="nav-item me-1" title="Leader Board">
+                    <a href="#" class="nav-link " id="leader-board-button"  data-toggle="modal" data-target="#leader-board-modal" ><svg xmlns="http://www.w3.org/2000/svg" height="30" width="35" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#e0b310" d="M353.8 54.1L330.2 6.3c-3.9-8.3-16.1-8.6-20.4 0L286.2 54.1l-52.3 7.5c-9.3 1.4-13.3 12.9-6.4 19.8l38 37-9 52.1c-1.4 9.3 8.2 16.5 16.8 12.2l46.9-24.8 46.6 24.4c8.6 4.3 18.3-2.9 16.8-12.2l-9-52.1 38-36.6c6.8-6.8 2.9-18.3-6.4-19.8l-52.3-7.5zM256 256c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H384c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32H256zM32 320c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H160c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zm416 96v64c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V416c0-17.7-14.3-32-32-32H480c-17.7 0-32 14.3-32 32z"/></svg></a>
+                  </li>
+                  <li class="nav-item ">
+                    <a href="#" class="nav-link  " data-bs-toggle="dropdown" id="profile-icon"><i class='far fa-user-circle' style='font-size:28px'></i></a>
+                    <div id="profile-dropdown">
+                      <ul class="dropdown-menu " >
+                        <li><a class="dropdown-item "  id="profile-button" data-toggle="modal" data-target="#profile-modal" href="#" >Profile</a></li>
+                        <li><a class="dropdown-item "  id="download-button" data-toggle="modal" data-target="#download-modal" href="#" >Download Transactions</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" id="logout-button" href="/home" onclick="logOut()">Log Out</a></li>
+                      </ul>
+                    </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </nav>
+  </div>
+
+
+
+<!-- body of page -->
+<!-- right half -->
+<div class=" row d-md-flex  d-sm-block">
+  <div class="container col-md-8 overflow-auto overflow-y-scroll mx-auto"  id="rightContent">
+  <!-- transaction date range selector-->
+    <div class="container mt-3 float-start mb-2" >
+      <div class="d-flex ms-5" id="date-range-selector">
+        <div class=" me-md-5 me-sm-3" id="buttons">
+          <div class="custom-input-group input-group-sm"  style="position: static;">
+            <button class="btn border-danger-subtle button " id="dailyButton" onclick="changeColor(this,'mydate')" style="color: white;background-color: red;">Daily</button>
+            <button class="btn border-danger-subtle button " id="monthlyButton" onclick="changeColor(this,'mymonth')">Monthly</button>
+            <button class="btn border-danger-subtle button " id="yearlyButton" onclick="changeColor(this,'myyear')">Yearly</button>
+          </div>
+        </div>
+        <div id="date-div" class="mx-md-0  ">
+          <input type="date" class=" w-sm-25 form-control form-control-sm border-danger-subtle" id="mydate"  min="2022-01" value="2018-05"  />
+        </div>
+        <div id="month-div" class="mx-md-0   d-none">
+          <input type="month" class="w-100 w-sm-75  form-control form-control-sm border-danger-subtle " id="mymonth"  min="2022-01" value="2018-05" />
+        </div>
+        <div id="year-div" class=" d-none" >
+          <input type="number" class="w-100 w-sm-25 form-control-sm  form-control border-danger-subtle " id="myyear" placeholder="YYYY" min="2022" max="2024" value="2023">
+        </div>
+      </div>
+    </div>
+
+    
+  <!-- transaction table-->
+    <div class="container table-responsive text-bg-primary bg-opacity-25 mb-5 mt-4 border border-3  rounded" id="premium-transaction-table-div">
+      <table class="table " id="transaction-table">
+          <div class="d-flex ">
+            <h4 class="text-center fst-italic pt-3 text-black text-nowrap ms-md-2">
+                Transactions Table
+            </h4>
+          </div>
+          <thead class=" table-danger">
+            <tr class="nowrap">
+              <th scope="col" class="col-md-2">Date</th>
+              <th scope="col" class="col-md-2">Amount</th>
+              <th scope="col" class="col-md-2">Method</th>
+              <th scope="col" class="col-md-2">Category</th>
+              <th scope="col" class="col-md-1">Edit</th>
+              <th scope="col" class="col-md-1">Delete</th>
+            </tr>
+          </thead>
+          <tbody id="transaction-body">
+          </tbody>
+      </table>
+    </div>
+    <div id="no-transaction-message" class="d-flex justify-content-center"></div>
+    <div class="d-flex  float-end me-5" id="add-trasaction-mobile">
+      <button  type="button" data-toggle="modal" data-target="#transactionModel" class="position-relative  btn  btn-primary pt-1 pb-0 mt-4"  ><i class="fa fa-plus py-2 fs-4" aria-hidden="true" ></i></button>
+    </div>
+    <!-- pagination button -->
+    <div class="d-block col-2 position-relative start-50" >
+      <div class="btn-group btn-sm " id="pagination">
+      </div>
+    </div>
+
+    <!-- transaction per page input -->
+    <div class=" w-75 d-none d-lg-block position-relative bottom-0 "  id="pagination-input"> 
+      <h6 class="mx-3  text-white  p-1 rounded "  id="trans-per-page-div">Transactions per page  <select id="transactions-per-page" name="transactionsperpage" value="" class="form-select form-select-sm form-control  d-inline" style="width: 60px;">
+        <option disabled selected value></option>
+        <option value=5>5</option>
+        <option value=10>10</option>
+        <option value=15>15</option>
+        <option value=20>20</option>
+      </select></h6>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- left half  -->
+  <!-- statastics of transaction -->
+  <div class="col-md-4 col-sm-10  "  id="leftContent">
+    <div class=" bg-white  rounded " id="transaction-statastics">
+      <div class="">
+        <h5 class="mb-3 ms-4 mt-3" id="overview-title">Overview</h5>
+        <div class=" ms-5 mt-2" id="overview-details">
+          <div class="mb-2 ">
+            <h6 class="d-inline">Income</h6><div class="d-flex float-end me-5"><h6 class=" text-primary d-inline" id="total-income"></h6><i class="fa fa-rupee mt-1 ms-1" style="font-size: 15px;color: #deac23;"></i></div>
+          </div>
+          <div class="mb-2 ">
+            <h6 class="d-inline ">Expense</h6><div class="d-flex float-end me-5"><h6 class=" text-danger d-inline" id="total-expense"></h6><i class="fa fa-rupee mt-1 ms-1" style="font-size: 15px;color: #deac23;"></i></div>
+          </div>
+          <div class="mb-2 ">
+            <h6 class="d-inline">Total</h6><div class="d-flex float-end me-5"><h6 class=" text-black d-inline" id="balance"></h6><i class="fa fa-rupee mt-1 ms-1" style="font-size: 15px;color: #deac23;"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- income /expense structure -->
+      <div class="mt-4" id="statastics-div">
+        <h2 class="chart-heading ms-4 mb-3">Transaction Statastics</h2>
+        <div class="container mt-1">
+          <ul class="nav md-pills nav-justified pills-info mb-3" id="statsTabs">
+            <li class="nav-item"> 
+              <a class="nav-link active bg-dark rounded text-white fs-6 fw-medium" id="expense-tab" data-toggle="tab" href="#expense">Expense Structure</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  rounded fs-6 fw-medium" id="income-tab" data-toggle="tab" href="#income">Income Structure</a>
+            </li>
+          </ul>
+          <div class="tab-content mt-2">
+            <!-- Expense Stats Tab -->
+            <div class="tab-pane fade show active pb-3" id="expense">
+              <div class="expense-stats ">
+                <div class="exp-chart-container ">
+                  <canvas class="exp-chart"></canvas>
+                </div>
+                <div class="exp-details">
+                  <ul></ul>
+                </div>
+              </div>
+            </div>
+            <!-- Income Stats Tab -->
+            <div class="tab-pane fade pb-3" id="income">
+              <div class="income-stats">
+                <div class="inc-chart-container">
+                  <canvas class="inc-chart"></canvas>
+                </div>
+                <div class="inc-details">
+                  <ul></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex ms-3" id="add-trasaction-desktop">
+      <button  type="button" data-toggle="modal" data-target="#transactionModel" class="position-fixed  btn  btn-primary pt-1 pb-0 mt-4" ><i class="fa fa-plus py-2 fs-4" aria-hidden="true" ></i></button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- transaction model -->
+<div class="modal fade"  id="transactionModel" tabindex="-1" role="dialog" aria-labelledby="transaction modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="form"> 
+      <div class="modal-content justify-content-center col-md-10  "> 
+          <div class="modal-body " id="transaction-modal-body"> 
+              <ul class="nav md-pills nav-justified pills-info"> 
+                  <li class="nav-item "> <a class="nav-link border-rounded rounded show active fs-3 fst-italic" data-toggle="tab" href="#expense-div" role="tab" id="expense-button"  aria-selected="true"><h6>Expense</h6></a> </li> 
+                  <li class="nav-item"> <a class="nav-link border-rounded rounded fs-3 fst-italic" data-toggle="tab" href="#income-div" role="tab" id="income-button" aria-selected="false"><h6>Income</h6></a> </li> 
+              </ul> 
+              <!-- Income Modal -->
+              <div class="tab-content py-0"> 
+                  <div class="tab-pane fade text-dark" id="income-div" role="tabpanel"> 
+                      <form id="income-form" class="text-dark" action=""  method="" name="income-form"> 
+                          <div class="mb-2 text-dark">
+                              <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                              <input type="number" class="form-control" id="amount" aria-describedby="amount spent">
+                          </div>
+                          <div class="form-group mb-2">
+                              <label for="paymentmethod"><h6>Payment Method</h6></label>
+                              <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                                  <option disabled selected value="">Select a payment method</option>
+                                  <option value="Cash">Cash</option>
+                                  <option value="Bank">Bank</option>
+                                  <option value="UPI">UPI</option>
+                                  <option value="Others">Others</option>
+                              </select>
+                          </div>
+                          <div class="mb-2">
+                              <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                              <input type="date" class="form-control Idate"  id="date" aria-describedby="date">
+                          </div>
+                          <div class="mb-2">
+                              <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                              <select id="category" name="category" class="form-select form-control">
+                                  <option disabled selected value="">Select a category</option>
+                                  <option value="Salary">Salary</option>
+                                  <option value="Bonus">Bonus</option>
+                                  <option value="Allowance">Allowance</option>
+                                  <option value="Tips">Tips</option>
+                                  <option value="Dividend">Dividend</option>
+                                  <option value="Other">Other</option>
+                              </select>
+                          </div>
+                          <div class="mb-3">
+                              <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                              <input type="text" class="form-control" id="description" aria-describedby="description">
+                          </div>
+                          <input type="hidden" id="type"  value="income">
+                          <div class="text-center ">
+                              <button type="submit" class="btn btn-primary " id="save-income" >Save</button>
+                              <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-dismiss="modal">Close</button> 
+                          </div>
+                          </form> 
+                      </div>
+
+              <!-- Expense modal -->
+              <div class="tab-pane fade active show mt-3 " id="expense-div" role="tabpanel"> 
+                  <form id="expense-form" class="" action="" method="post" name="expense-form"> 
+                      <div class="mb-2">
+                          <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                          <input type="number" class="form-control" id="amount"  aria-describedby="amount spent">
+                      </div>
+                      <div class="form-group mb-2">
+                          <label for="paymentmethod"><h6>Payment Method</h6></label>
+                          <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                              <option disabled selected value="">Select a payment method</option>
+                              <option value="Cash">Cash</option>
+                              <option value="Bank">Bank</option>
+                              <option value="Card">Card</option>
+                              <option value="UPI">UPI</option>
+                              <option value="Others">Others</option>
+                          </select>
+                      </div>
+                      <div class="mb-2">
+                          <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                          <input type="date" class="form-control Edate"  id="date" aria-describedby="date">
+                      </div>
+                      <div class="mb-2">
+                          <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                          <select id="category" name="category2" class="form-select form-control">
+                              <option disabled selected value="">Select a category</option>
+                              <option value="Education">Education</option>
+                              <option value="Bills">Bills</option>
+                              <option value="Fuel">Fuel</option>
+                              <option value="Food">Food</option>
+                              <option value="Health">Health</option>
+                              <option value="Shopping">Shopping</option>
+                              <option value="Travel">Travel</option>
+                              <option value="Other">Other</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                          <input type="text" class="form-control" id="description" aria-describedby="description">
+                      </div>
+                      <input type="hidden" id="type" value="expense">
+                      <div class="text-center ">
+                      <button type="submit" class="btn btn-primary " id="save-expense">Save</button>
+                      <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-dismiss="modal">Close</button> 
+
+                      </div>
+                  </form>
+              </div> 
+          </div> 
+      </div> 
+      <div id="warning" class="" ></div>
+  </div> 
+</div>
+</div>
+
+
+<!-- expense modal -->
+<div class="modal fade"  id="edit-expense-modal" tabindex="-1" role="dialog" aria-labelledby="expense modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered " role="form">
+    <div class="modal-content col-md-10 ">
+      <div class=" text-center justify-content-center d-flex mt-2">
+        <h6 class="modal-title bg-danger p-1 fs-5 fw-normal fst-italic w-75 text-white rounded fst-italic" id="exampleModalLongTitle">Expense</h6>
+      </div>
+      <div class="modal-body mt-0">
+          <form id="edit-expense-form" class="" action="" method="post" name="edit-expense-form"> 
+              <div class="mb-2">
+                  <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                  <input type="number" class="form-control" id="amount"  aria-describedby="amount spent">
+              </div>
+              <div class="form-group mb-2">
+                  <label for="paymentmethod"><h6>Payment Method</h6></label>
+                  <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                      <option disabled selected value="">Select a payment method</option>
+                      <option value="Cash">Cash</option>
+                      <option value="Bank">Bank</option>
+                      <option value="Card">Card</option>
+                      <option value="UPI">UPI</option>
+                      <option value="Others">Others</option>
+                  </select>
+              </div>
+              <div class="mb-2">
+                  <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                  <input type="date" class="form-control date2"  id="date" aria-describedby="date">
+              </div>
+              <div class="mb-2">
+                  <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                  <select id="category" name="category2" class="form-select form-control">
+                      <option disabled selected value="">Select a category</option>
+                      <option value="Education">Education</option>
+                      <option value="Bills">Bills</option>
+                      <option value="Fuel">Fuel</option>
+                      <option value="Food">Food</option>
+                      <option value="Health">Health</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Other">Other</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                  <input type="text" class="form-control" id="description" aria-describedby="description">
+              </div>
+              <input type="hidden" id="type" value="expense">
+              <div class="text-center ">
+              <button type="submit" class="btn btn-primary " id="save-expense">Save</button>
+              <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-bs-dismiss="modal">Close</button> 
+              </div>
+          </form>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+   <!-- income modal -->
+   <div class="modal fade"  id="edit-income-modal" tabindex="-1" role="dialog" aria-labelledby="income modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="form">
+      <div class="modal-content col-md-10 ">
+        <div class=" text-center justify-content-center d-flex mt-2">
+          <h6 class="modal-title p-1 fs-5 fw-normal fst-italic w-75 text-white rounded fst-italic" id="exampleModalLongTitle" style="background-color: #1974D2;">Income</h6>
+        </div>
+        <div class="modal-body mt-0">
+            <form id="edit-income-form" class="text-dark" action=""  method="" name="edit-income-form"> 
+                <div class="mb-2 text-dark">
+                    <label for="amount" class="form-label m-0 "><h6>Amount</h6></label>
+                    <input type="number" class="form-control" id="amount" aria-describedby="amount spent">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="paymentmethod"><h6>Payment Method</h6></label>
+                    <select class="form-control form-select" id="paymentmethod" name="paymentmethod" required>
+                        <option disabled selected value="">Select a payment method</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label for="date" class="form-label m-0 "><h6>Date</h6></label>
+                    <input type="date" class="form-control date1"  id="date" aria-describedby="date">
+                </div>
+                <div class="mb-2">
+                    <label for="category" class="form-label m-0 "><h6>Category</h6></label>
+                    <select id="category" name="category" class="form-select form-control">
+                        <option disabled selected value="">Select a category</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Bonus">Bonus</option>
+                        <option value="Allowance">Allowance</option>
+                        <option value="Tips">Tips</option>
+                        <option value="Dividend">Dividend</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label m-0 "><h6>Description</h6></label>
+                    <input type="text" class="form-control" id="description" aria-describedby="description">
+                </div>
+                <input type="hidden" id="type"  value="income">
+                <div class="text-center ">
+                    <button type="submit" class="btn btn-primary " id="save-income" >Update</button>
+                    <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-bs-dismiss="modal">Close</button> 
+                </div>
+                </form> 
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- transaction details popup window -->
+<div class="modal fade" id="transaction-details-modal" tabindex="-1" role="dialog" aria-labelledby="transaction details" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fs-4" id="exampleModalLabel">Transaction Details</h5>
+      </div>
+      <div class="modal-body" id="detailsmodalbody">
+          <div class="d-flex">
+              <h6 class="text-secondary">Amount :</h6><h6 id="amount"></h6>
+          </div>
+          <div class="d-flex">
+              <h6 class="text-secondary">Payment Method :</h6><h6 id="paymentmethod"></h6>
+          </div>
+          <div class="d-flex">
+              <h6 class="text-secondary">Date :</h6><h6 id="date"></h6>
+          </div>
+          <div class="d-flex">
+              <h6 class="text-secondary">Category :</h6><h6 id="category"></h6>
+          </div>
+          <div class="d-flex">
+              <h6 class="d-flex text-secondary" >Description :</h6><h6 id="description"></h6>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- navbar feature -->
+  <!-- leader board modal -->
+  <div class="modal fade " id="leader-board-modal" tabindex="-1" role="dialog" aria-labelledby="leader board" aria-hidden="true">
+    <div class="modal-dialog  modal-fullscreen-md-down modal-dialog-end"  id="leader-board-modal-section" role="document">
+      <div class="modal-content  " >
+        <div class="modal-header ms-0 py-0 mt-1">
+          <button type="button" class="btn-close btn mt-1" data-dismiss="modal" aria-label="Close">
+           </button>
+        </div>
+        <div class="modal-body">
+          <div class="container m-auto>
+            <div class="card "  id="leader-board-card">
+              <div class="card-body justify-content-center d-flex mb-3">
+                <h4 class="card-title bg-black p-2 rounded" id="leader-board-title">Leader Board</h4>
+              </div>
+              <ol class="list-group list-group-numbered list-group-flush mx-4 mt-4 fs-6 fw-bold" id="leader-list">
+              </ol>
+            </div>
+          </div>  
+        </div>
+       
+      </div>
+    </div>
+
+<!-- download modal -->
+<div class="modal fade " id="download-modal" tabindex="-1" role="dialog" aria-labelledby="download transaction" aria-hidden="true">
+  <div class="modal-dialog  modal-fullscreen-md-down modal-dialog-end"   role="document">
+    <div class="modal-content  " >
+      <div class="modal-header ms-0 py-0 mt-1">
+        <button type="button" class="btn-close btn mt-1" data-dismiss="modal" aria-label="Close">
+         </button>
+      </div>
+      <div class="modal-body">
+        <div class="container w-100>
+          <div class="card "  id="leader-board-card">
+            <div class="card-body justify-content-center d-flex">
+              <h4 class="card-title" id="leader-board-title">Download Transactions</h4>
+            </div>
+            <div class="m-4 justify-content-center d-flex">
+              <button class="btn btn-info fs-5 text-white" id="download-new-file">Download new file</button>
+            </div>
+            <h4>Downloaded Transaction File Links</h4>
+            <ul class="list-group list-group-flush mx-5" id="downloade-files">
+            </ul>
+          </div>
+        </div>  
+      </div>
+     
+    </div>
+  </div>
+
+
+
+
+  <!--profile Modal -->
+  <div class="modal fade " id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="user profile" aria-hidden="true">
+    <div class="modal-dialog  modal-fullscreen-md-down modal-dialog-end"  id="profile-modal-section" role="document">
+      <div class="modal-content  " >
+        <div class="modal-header ms-0 py-0 mt-1">
+          <div class="py-1 px-2   rounded-circle " id="premium-div">
+            <h6   id="premium-title" >Premium User</h6>
+          </div>
+          <button type="button" class="btn-close btn" data-dismiss="modal" aria-label="Close">
+           </button>
+        </div>
+        <div class="modal-body">
+          <div class="container m-auto>
+            <div class="card col-7" style="width: 22rem;" id="profile-card">
+              <img src="/images/person.jpg" class="card-img-top rounded-circle rounded mb-3 mt-n3" alt="Profile Image">
+              <div class="card-body justify-content-center d-flex">
+                <h4 class="card-title text-primary "  id="user-name"></h4>
+              </div>
+              <ul class="list-group list-group-flush ml-n5 w-100">
+                <li class="list-group-item text-secondary">Email : <h6 id="user-email" class="d-inline ms-2 fs-6"></h6></li>
+                <li class="list-group-item text-secondary">Phone Number : <h6 class="d-inline ms-2" id="user-number"></h6></li>
+                <li class="list-group-item text-secondary">Total Expense : <h6 class="d-inline ms-2 text-danger" id="user-expense" ></h6></li>
+                <li class="list-group-item text-secondary">Total Income : <h6 class="d-inline ms-2 text-info" id="user-income"></h6></li>
+              </ul>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.js"></script>
+<script src="/js/premiumUserMainPage.js"></script>
+</body>
+</html>
+
+
+
+
+
+

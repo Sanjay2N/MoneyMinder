@@ -1,0 +1,277 @@
+body{
+  background-color: #e6f7ec !important;
+  scroll-behavior: smooth;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* nav */
+#home-button{
+  cursor: pointer;
+}
+
+.nav {
+  font-family: 'Hedvig Letters Serif', serif !important;
+}
+
+nav{
+  text-align: center;
+  position: fixed !important;
+  width: 100%;
+}
+
+#navbar{
+  height: 10%;
+}
+
+#navbar #profile-icon{
+  color:#09147d ;
+}
+
+#navbar .dropdown-menu a:hover{
+  border-radius: 5%;
+  color: white ;
+  background-color: #5ca650 ;
+}
+
+#dropdown-items:hover{
+  background-color: aqua;
+
+}
+
+
+/* left of webpage */
+#leftContent{
+  height:75vh ;
+  font-family: "Rubik", sans-serif;
+
+}
+#transaction-statastics{
+  height: fit-content;
+}
+
+/* statastics  */
+#buttons button {
+    cursor: pointer;
+    outline: none;
+    color: black;
+    background-color:white;
+  }
+  
+.custom-input-group {
+  display: flex;
+  max-width: 300px; /* Adjust the width as needed */
+  border-radius: 10%;
+}
+
+
+#overview-details{
+  font-size: 22px;
+  margin-top: 10%;
+}
+
+#leftContent #overview-title{
+  color: #023047;
+  font-size: 24px;
+  margin-left: 10%;
+}
+
+/* pie chart part */
+.chart-heading {
+  
+  color: #023047;
+  font-size: 24px;
+}
+
+.exp-chart-container,.inc-chart-container {
+  width: 200px;
+}
+
+.expense-stats,.income-stats {
+  font-family: "Rubik", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 0 auto;
+  width: fit-content;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding: 8px 32px;
+  color: #023047;
+  transition: all 400ms ease;
+}
+
+.expense-stats .exp-details ul ,.income-stats .inc-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.expense-stats .exp-details ul li, .income-stats .inc-details ul li {
+  font-size: 16px;
+  margin: 12px 0;
+  text-transform: uppercase;
+}
+
+.expense-stats .exp-details .percentage {
+  font-weight: 700;
+  color: #e63946;
+}
+
+.income-stats .inc-details .percentage{
+  font-weight: 700;
+  color: #33FFF6;
+}
+
+
+/* right of webpage  */
+#rightContent{
+  height: 85vh;
+}
+
+
+#date-range-selector{
+  width: fit-content;
+  padding: 6px;
+  border-radius: 5px;
+  background-color: rgb(109, 190, 200);
+  background-blend-mode: lighten;
+}
+
+#premium-transaction-table-div{
+  width: 90%;
+}
+
+#transaction-body{
+  background-color: white;
+}
+
+
+/* pagination input  */
+#trans-per-page-div{
+  width: 31%;
+  background-color:#859ba7;
+}
+
+/* modals */
+
+/* leade board */
+#leader-board-modal{
+  height: fit-content;
+}
+
+#leader-board-modal #leader-board-title{
+  color: #f5c73d;
+  opacity: 100;
+}
+
+#leader-board-modal #leader-list li{
+  color: #aba9a2 !important;
+  text-align: left !important;
+}
+
+#leader-board-modal #leader-list li span:nth-child(2){
+  color: #cc9c0a !important;
+}
+
+/* profile modal */
+#profile-dropdown{
+  position: absolute;
+  left: 88%;
+}
+
+
+#profile-modal{
+  font-weight:550;
+  font-size: 17px;
+  font-family:'Times New Roman', Times, serif; 
+  height: fit-content;
+}
+#premium-title{
+  top: 50%;
+  left: 50%;
+  font-family: 'Times New Roman',serif;
+  font-weight: bold;
+  background-image: linear-gradient(
+   to right,
+   #462523 0,
+   #cb9b51 22%, 
+   #462523 100%
+   );
+  color:transparent;
+  -webkit-background-clip:text;
+} 
+
+#profile-modal ul h6{
+  font-style: normal;
+  font-weight: 550;
+  color: black ;
+}
+
+#profile-dropdown{
+  position: absolute;
+  left: 88%;
+}
+#profile-modal img {
+  border-radius: 50%;
+}
+
+/* transaction modal  */
+#transactionModel #income-button{
+  background-color: white;
+  color: black;
+}
+
+#transactionModel  #expense-button{
+  background-color: red;
+  color: white;
+}
+
+ /* modal styling */
+.modal-header {
+border: none !important;
+}
+
+  
+@media  (min-width: 576px)
+{
+  .modal-dialog-end{
+        right:-32%;
+        -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+            -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+              -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+                transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+  #profile-modal{
+    right: 0;
+  }
+  #profile-modal-section{
+    width: 30%;
+  }
+  #add-trasaction-mobile{
+    display: none !important;
+  }
+  }
+  
+  @media (max-width:576px) {
+  
+  #premium-transaction-table-div{
+    width: 96%;
+  }
+  #profile-dropdown {
+    right: 0 !important;
+    left: auto !important;
+  }
+
+  #date-range-selector{
+    margin-left: 0rem !important;
+  }
+  #date-range-selector #date-div,#month-div,#year-div{
+    margin-left: 2rem !important;
+  }
+  #add-trasaction-desktop{
+    display: none !important;
+  }
+  
+  }
+  
