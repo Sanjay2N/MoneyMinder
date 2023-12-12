@@ -90,7 +90,7 @@ exports.updatePassword=async(req,res)=>{
         const currentTime = new Date();
         const createdAtTime = new Date(passwordreset.createdAt);
         const timeDifference = currentTime - createdAtTime;
-        const timeLimit = 50 * 60 * 1000; 
+        const timeLimit = 10 * 60 * 1000; 
         if(timeDifference <= timeLimit){
             const saltrounds=10;
             bcrypt.genSalt(saltrounds, function(err, salt) {
