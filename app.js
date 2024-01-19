@@ -21,13 +21,9 @@ const sequelize=require('./util/database')
 
 const app=new express();
 
-// const accessLogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'});
 
 
 app.use(cors());
-// app.use(helmet({contentSecurityPolicy: false,}));
-// app.use(compression());
-// app.use(morgan("combined",{stream:accessLogStream}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname,'/public')));
 
