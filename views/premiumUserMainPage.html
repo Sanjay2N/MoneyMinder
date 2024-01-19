@@ -37,7 +37,7 @@
                         <li><a class="dropdown-item "  id="profile-button" data-toggle="modal" data-target="#profile-modal" href="#" >Profile</a></li>
                         <li><a class="dropdown-item "  id="download-button" data-toggle="modal" data-target="#download-modal" href="#" >Download Transactions</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" id="logout-button" href="/home" onclick="logOut()">Log Out</a></li>
+                        <li><a class="dropdown-item" id="logout-button"  onclick="logOut()">Log Out</a></li>
                       </ul>
                     </div>
                 </li>
@@ -85,7 +85,7 @@
                 Transactions Table
             </h4>
           </div>
-          <thead class=" table-dark opacity-75">
+          <thead class=" table-dark opacity-75 " >
             <tr class="nowrap">
               <th scope="col" class="col-md-2">Date</th>
               <th scope="col" class="col-md-2">Amount</th>
@@ -100,8 +100,8 @@
       </table>
     </div>
     <div id="no-transaction-message" class="d-flex justify-content-center"></div>
-    <div class="d-flex  float-end me-5" id="add-trasaction-mobile">
-      <button  type="button" data-toggle="modal" data-target="#transactionModel" class="position-relative  btn  btn-primary pt-1 pb-0 mt-4"  ><i class="fa fa-plus py-2 fs-4" aria-hidden="true" ></i></button>
+    <div class="d-flex  float-end me-2" id="add-trasaction-mobile">
+      <button  type="button" data-toggle="modal" id="transaction-button1" data-target="#transactionModel" class=" position-relative  btn  btn-primary pt-1 pb-0  "   ><i class="fa fa-plus py-2 fs-4" aria-hidden="true" ></i></button>
     </div>
     <!-- pagination button -->
     <div class="d-block col-2 position-relative start-50" >
@@ -184,7 +184,7 @@
       </div>
     </div>
     <div class="d-flex ms-3" id="add-trasaction-desktop">
-      <button  type="button" data-toggle="modal" data-target="#transactionModel" class="position-fixed  btn  btn-primary pt-1 pb-0 mt-4" ><i class="fa fa-plus py-2 fs-4" aria-hidden="true" ></i></button>
+      <button  type="button" data-toggle="modal" id="transaction-button2" data-target="#transactionModel" class="position-fixed  btn  btn-primary pt-1 pb-0 mt-4" ><i class="fa fa-plus py-2 fs-4" aria-hidden="true" ></i></button>
     </div>
   </div>
 </div>
@@ -240,7 +240,7 @@
                           </div>
                           <input type="hidden" id="type"  value="income">
                           <div class="text-center ">
-                              <button type="submit" class="btn btn-primary " id="save-income" >Save</button>
+                              <button type="submit" class="btn btn-primary " id="save-income"  >Save</button>
                               <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-dismiss="modal">Close</button> 
                           </div>
                           </form> 
@@ -350,8 +350,7 @@
               </div>
               <input type="hidden" id="type" value="expense">
               <div class="text-center ">
-              <button type="submit" class="btn btn-primary " id="save-expense">Save</button>
-              <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-bs-dismiss="modal">Close</button> 
+              <button type="submit" class="btn btn-primary " id="save-expense">Update</button>
               </div>
           </form>
           </div>
@@ -406,7 +405,6 @@
                 <input type="hidden" id="type"  value="income">
                 <div class="text-center ">
                     <button type="submit" class="btn btn-primary " id="save-income" >Update</button>
-                    <button type="button" class="btn btn-secondary btn-md waves-effect waves-light" data-bs-dismiss="modal">Close</button> 
                 </div>
                 </form> 
             </div>
@@ -502,7 +500,7 @@
 
 
   <!--profile Modal -->
-  <div class="modal fade " id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="user profile" aria-hidden="true">
+  <div class="modal fade w-sm-75" id="profile-modal" tabindex="-1" role="dialog" aria-labelledby="user profile" aria-hidden="true">
     <div class="modal-dialog  modal-fullscreen-md-down modal-dialog-end"  id="profile-modal-section" role="document">
       <div class="modal-content  " >
         <div class="modal-header ms-0 py-0 mt-1">
@@ -539,6 +537,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.js"></script>
+<script src="/js/commonFunctions.js"></script>
 <script src="/js/premiumUserMainPage.js"></script>
 </body>
 </html>

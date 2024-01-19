@@ -20,7 +20,7 @@ exports.forgetPassword=async (req,res)=>{
 
             };
             const receivers=[{
-                email:'sanjaykcbcs@gmail.com',
+                email:email,
             }];
             const resetresponse = await user.createForgotPasswordRequest({});
             const { id } = resetresponse;
@@ -95,7 +95,6 @@ exports.updatePassword=async(req,res)=>{
             const saltrounds=10;
             bcrypt.genSalt(saltrounds, function(err, salt) {
                 if(err){
-                    console.log(err);
                     throw new Error(err);
                 }
                 bcrypt.hash(newpassword,salt,async(err,hash)=>{

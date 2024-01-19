@@ -6,15 +6,6 @@ const Sequelize = require("sequelize");
 const { Op } = require('sequelize');
 
 
-function isStringsNotValidate(stringArray){
-    for(let i=0;i<stringArray.length;i++){
-        if(stringArray[i]==undefined || stringArray[i].length==0){
-            return true;
-        }
-    }
-    return false;
-}
-
 exports.addUserTransaction=async (req,res)=>{
     const t= await sequelize.transaction();
     try{
@@ -83,31 +74,6 @@ exports.getUserTransactions=async(req,res)=>{
             order:['date']
             });
            
-        if(isPremiumUser){
-            const expenseDetails=await Userservices.getTransactions(req,{
-                where:{...dateRangeCondition,type:"expense"},
-                attributes: ['category', [sequelize.fn('sum', sequelize.col('amount')),"totalamount"]], 
-                        group: ["category"]
-            });
-            const incomeDetails=await Userservices.getTransactions(req,{
-                where:{...dateRangeCondition,type:"income"},
-                attributes: ['category', [sequelize.fn('sum', sequelize.col('amount')),"totalamount"]], 
-                        group: ["category"]
-            });
-            return res.status(200).json({
-                transactions:transactions,
-                expenseDetails:expenseDetails,
-                incomeDetails:incomeDetails, 
-                currentPage:page,
-                hasNextPage:(ITEMS_PER_PAGE*page)<totalItems,
-                nextPage:page+1,
-                hasPreviousPage:page>1,
-                previousPage:page-1,
-                lastPage:Math.ceil(totalItems/ITEMS_PER_PAGE),
-            });
-
-        }
-        
         return res.status(200).json({
             
             transactions:transactions,
@@ -207,4 +173,15 @@ exports.getTransactionDetails= async (req,res)=>{
     catch(error){
         res.status(500).json({error:error});
     }
+}
+
+
+
+function isStringsNotValidate(stringArray){
+    for(let i=0;i<stringArray.length;i++){
+        if(stringArray[i]==undefined || stringArray[i].length==0){
+            return true;
+        }
+    }
+    return false;
 }

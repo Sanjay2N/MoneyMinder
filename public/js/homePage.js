@@ -5,6 +5,8 @@ const signupButton=navbar.querySelector("#signup");
 const signupButton1=document.querySelector("#signup1");
 const loginButton=navbar.querySelector("#login");
 const navItems=navbar.querySelector("#nav-items");
+
+
 const homeBody=document.querySelector("#home-body");
 const signupDiv=document.querySelector("#signup-body");
 const loginDiv=document.querySelector("#login-body");
@@ -162,7 +164,7 @@ async function signUp(e){
 
     }
     catch(error){
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 409) {
             showElement(warningDiv1);
             setTimeout(()=>{hideElement(warningDiv1)},2000);
         }else if(error.response && error.response.status === 400){
@@ -189,7 +191,6 @@ fogetform.addEventListener("submit",forgetPassword);
 async function forgetPassword(e){
     try{
         e.preventDefault();
-        console.log("password forget")
         const response=await axios.post("password/forgotpassword",{email:e.target.email2.value});
         showElement(successDiv3);
         setTimeout(()=>{

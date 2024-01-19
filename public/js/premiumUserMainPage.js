@@ -1,30 +1,7 @@
 let dateRange;
 const token=localStorage.getItem("token");
 
-// navbar features
-const profileButton=document.querySelector("#profile-button");
-const profileModal=document.querySelector("#profile-modal");
-const profileCard=profileModal.querySelector("#profile-card");
-profileButton.onclick=async function(e){
 
-    try{
-        const response=await axios.get(`../user/getuserdetails`,{headers:{"Authorization":token}});
-        console.log(response.data);
-        const {name,email,phoneNumber,totalExpense,totalIncome}=response.data.userDetails;
-        profileCard.querySelector("#user-email").innerText=email;
-        profileCard.querySelector("#user-name").innerText=name;
-        profileCard.querySelector("#user-number").innerText=phoneNumber;
-        profileCard.querySelector("#user-expense").innerText=totalExpense;
-        profileCard.querySelector("#user-income").innerText=totalIncome;
-    }
-    catch(error){
-        console.log(error)
-    }
-}
-
-function logOut(){
-    localStorage.removeItem("token");
-}
 
 // leader board
 const leaderBoardButton=document.querySelector("#leader-board-button");
@@ -34,12 +11,11 @@ async function getLeaderBoard(){
     leaderBoardList.innerHTML='';
     const response=await axios.get("../premium/getleaderboard",{headers:{"Authorization":token}});
     response.data.forEach(leaderDetails=>{
-        console.log(leaderDetails);
         addToLeaderBoard(leaderDetails);
     })
 }
 function addToLeaderBoard(leaderDetails){
-    if(leaderDetails.total_transaction===0){
+    if(leaderDetails.total_transaction==0){
         return;
     }
     leaderBoardList.innerHTML+=`<li class="list-group-item d-flex justify-content-between ">
@@ -59,7 +35,12 @@ async function getDownloadedFileList(){
         addLinkToDownloadModal(fileList.data.fileLinks)
     }
     catch(error){
+        
         console.log(error);
+        if(error.response.status==401){
+            alert("Session Time Out,Login again ");
+            logOut();
+        }
     }
 }
 
@@ -92,10 +73,22 @@ async function download(event){
     }
     catch(error){
         console.log(error);
+        if(error.response.status==401){
+            alert("Session Time Out,Login again ");
+            logOut();
+        }
     }
 }
  
-
+// date setters
+const transactionButton1=document.querySelector("#transaction-button1");
+const transactionButton2=document.querySelector("#transaction-button2");
+transactionButton1.addEventListener("click",setDate);
+transactionButton2.addEventListener("click",setDate);
+function setDate(){
+    Edate.value = new Date().toJSON().slice(0,10);
+    Idate.value = new Date().toJSON().slice(0,10);
+}
 
 // left half of webpage 
 const leftContent=document.querySelector("#leftContent");
@@ -273,6 +266,7 @@ async function getTransaction(pageNumber,periodRange){
         }
         let transactionsPerPage=localStorage.getItem("transactionsPerPage");
         const response=await axios.get(`../transaction?page=${pageNumber}&noItems=${transactionsPerPage} &periodRange=${periodRange}`,{headers:{"Authorization":token}});
+        
         pagination.innerHTML='';
         if(response.data.transactions.length===0){
             noTransactionMessage.innerHTML='<h4>No transaction available</h4>';
@@ -294,16 +288,22 @@ async function getTransaction(pageNumber,periodRange){
         noTransactionMessage.innerHTML="";
         showTransaction(response.data.transactions);
         showPagination(response.data);
-        const expenseDetails=response.data.expenseDetails;
-        const incomeDetails=response.data.incomeDetails;
-        createChart(decodeObject(expenseDetails,0),expenseChart,expenseUl,0);
-        createChart(decodeObject(incomeDetails,1),incomeChart,incomeUl,1);
-        updateOverview();
+
+        if(pageNumber==1){
+            const statasticsDetails=await axios.get(`../premium/transaction/statastics?periodRange=${periodRange}`,{headers:{"Authorization":token}});
+            const expenseDetails=statasticsDetails.data.expenseDetails;
+            const incomeDetails=statasticsDetails.data.incomeDetails;
+            createChart(decodeObject(expenseDetails,0),expenseChart,expenseUl,0);
+            createChart(decodeObject(incomeDetails,1),incomeChart,incomeUl,1);
+            updateOverview();
+        }
+        
 
     }
     catch(error){
         if(error.response.status==401){
-            alert(error.response.data.message);
+            alert("Session Time Out,Login again ");
+            logOut();
         }
         else{
             console.log(error)
@@ -312,208 +312,3 @@ async function getTransaction(pageNumber,periodRange){
     }
 }
 
-function showTransaction(transactions){
-    transactionBody.innerHTML="";
-    transactions.forEach(transaction=>{
-        const id="transaction-"+transaction.id;
-        let color;
-        let sign;
-        if(transaction.type=="income"){
-            color="text-primary";
-            sign="+";
-        }
-        else{
-            color="text-danger";
-            sign="-";
-        }
-    transactionBody.innerHTML+=`
-    <tr id=${id} class ="bg-white" onclick='showDetails(event,${transaction.id})'>
-                    <td class="${color}">${transaction.formateddate}</td>
-                    <td class="${color}">${sign}${transaction.amount}<i class="fa fa-rupee mt-1 ms-1" style="font-size: 15px;"></i></td>
-                    <td class="${color}">${transaction.paymentmethod}</td>
-                    <td class="${color}"->${transaction.category}</td>
-                    <td><button class='btn btn-info ${transaction.id} edit '  onclick='editTransaction(event,${transaction.id})' id=" edit-${transaction.id}" >edit</button></td>
-                    <td><button class='btn btn-danger ${transaction.id} delete'  onclick='deleteTransaction(event,${transaction.id})' id=" delete-${transaction.id}" >delete</button></td>
-                  </tr>`
-    })
-}
-
-async function deleteTransaction(e,id){
-    try{
-        e.preventDefault();
-        const response=await axios.delete("../transaction/"+id,{headers:{"Authorization":token}});
-        document.querySelector("#transaction-"+id).remove();
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-
-
-// transaction model
-
-
-const transactionModal=document.querySelector("#transactionModel");
-const transcationModalBody=document.querySelector("#transaction-modal-body");
-const incomeButton=transcationModalBody.querySelector("#income-button");
-const expenseButton=transcationModalBody.querySelector("#expense-button");
-incomeButton.onclick=function(){
-    incomeButton.style.backgroundColor='#1974D2';
-    incomeButton.style.color="white";
-    expenseButton.style.backgroundColor='white';
-    expenseButton.style.color='black';
-}
-expenseButton.onclick=function(){
-    expenseButton.style.backgroundColor='red';
-    expenseButton.style.color="white";
-    incomeButton.style.backgroundColor='white';
-    incomeButton.style.color="black";
-}
-// date pre-filler
-transcationModalBody.querySelector(".Idate").value = new Date().toJSON().slice(0,10)
-transcationModalBody.querySelector(".Edate").value = new Date().toJSON().slice(0,10)
-
-//add transaction 
-const incomeForm=document.querySelector("#income-form");
-const expenseForm=document.querySelector("#expense-form");
-const transactionBody=document.querySelector("#transaction-body");
-const transactionModel=document.querySelector("#transactionModel");
-
-incomeForm.addEventListener("submit",addTransaction);
-expenseForm.addEventListener("submit",addTransaction);
-async function addTransaction(e){
-    try{
-        e.preventDefault();
-        const amount=e.target.amount.value;
-        const formateddate=e.target.date.value;
-        const paymentMethod=e.target.paymentmethod.value;
-        const category=e.target.category.value;
-        const description=e.target.description.value;
-        const type=e.target.type.value;
-        const transactionDetails={
-            amount:amount,
-            date:formateddate,
-            paymentmethod:paymentMethod,
-            category:category,
-            description:description,
-            type:type
-        }
-        const response=await axios.post("../transaction",transactionDetails,{headers:{"Authorization":token}});
-        if(response.status==201){
-            e.target.reset();
-            getTransaction(1);
-            return;
-        }
-    }
-    catch(error){
-        console.log(error.response.data.status)
-        if(error.response.status==400){
-            transactionModel.querySelector("#warning").innerText=error.response.data.message;
-        }
-        
-        else{
-            console.log(error)
-        }
-    }
-}
-
-
-// edit income/expense part
-const editExpenseForm=document.querySelector("#edit-expense-form");
-const editIncomeForm=document.querySelector("#edit-income-form");
-async function editTransaction(e,id){
-    try{
-        e.preventDefault();
-        const token=localStorage.getItem("token");
-        const transactionDetails=await axios.get("../transaction/edit/"+id,{headers:{"Authorization":token}});
-        document.querySelector("#transaction-"+id).remove();
-        const{amount,category,description,paymentmethod,date,type}=transactionDetails.data.transaction;
-        if(type==="expense"){
-            $("#edit-expense-modal").modal("show");
-            editExpenseForm.amount.value=amount;
-            editExpenseForm.category.value=category;
-            editExpenseForm.description.value=description;
-            editExpenseForm.paymentmethod.value=paymentmethod;
-            editExpenseForm.date.value=date;
-        }
-        else{
-            $("#edit-income-modal").modal("show");
-            editIncomeForm.amount.value=amount;
-            editIncomeForm.category.value=category;
-            editIncomeForm.description.value=description;
-            editIncomeForm.paymentmethod.value=paymentmethod;
-            editIncomeForm.date.value=date;
-        }
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-editExpenseForm.addEventListener('submit',addTransaction);
-editIncomeForm.addEventListener('submit',addTransaction);
-
-
-
-// change of transaction per page 
-const transactionPerPageInput=document.querySelector("#transactions-per-page");
-transactionPerPageInput.addEventListener("change",()=>{
-    localStorage.setItem("transactionsPerPage",transactionPerPageInput.value);
-    window.location.reload();
-})
-
-
-// pagination part 
-function showPagination({currentPage,hasNextPage,nextPage,hasPreviousPage,previousPage}){
-    if(hasPreviousPage==false && hasNextPage==false){
-        return;
-    }
-    pagination.innerHTML='';
-    if(hasPreviousPage){
-        addPaginationButton(previousPage,false);
-    }
-    addPaginationButton(currentPage,true);
-    if(hasNextPage){
-        addPaginationButton(nextPage,false);
-    }
-}
-
-function addPaginationButton(page_number,currentpage){
-    const Button=document.createElement('button');
-        Button.classList.add("btn","btn-secondary","btn-sm","h-25","d-block");
-        if(currentpage===false){
-            Button.innerHTML=`<h6>${page_number}</h6>`;
-        }
-        else{
-            Button.innerHTML=`<h5>${page_number}</h5>`;
-        }
-        Button.addEventListener("click",()=>getTransaction(page_number,dateRange));
-        pagination.append(Button);
-
-}
-
-//   transaction-details-modal.
-const transactionDetailsModal=document.querySelector("#transaction-details-modal");
-const transactionDetailsBody=document.querySelector("#detailsmodalbody");
-async function showDetails(e,id){
-    if(e.target.classList.contains("edit") || e.target.classList.contains("delete")){
-        return;
-    }
-    const transactionDetails=await axios.get("../transaction/"+id,{headers:{"Authorization":token}});
-    $("#transaction-details-modal").modal("show");
-    const {amount,formateddate,paymentmethod,category,description,type}=transactionDetails.data.transaction;
-    if(type==='expense'){
-        const amountEle=transactionDetailsBody.querySelector("#amount");
-        amountEle.innerText="- "+amount;
-        amountEle.style.color="red";
-    }
-    else{
-        const amountEle=transactionDetailsBody.querySelector("#amount");
-        amountEle.innerText="+ "+amount;
-        amountEle.style.color="#0275d8";
-    }
-    transactionDetailsBody.querySelector("#category").innerText=category;
-    transactionDetailsBody.querySelector("#date").innerText=formateddate;
-    transactionDetailsBody.querySelector("#paymentmethod").innerText=paymentmethod;
-    transactionDetailsBody.querySelector("#description").innerText=description;
-    
-}

@@ -1,14 +1,8 @@
 require('dotenv').config();
-
-// const https=require('https');
 const path=require("path");
-// const fs=require('fs');
+
 const express=require("express");
 const cors=require("cors");
-// const helmet=require("helmet");
-// const compression=require("compression");
-// const morgan=require('morgan');
-// const body_parser=require("body-parser");
 
 const userRoutes=require("./routes/user");
 const transactionRoutes=require("./routes/transaction");

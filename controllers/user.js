@@ -4,44 +4,18 @@ const jwt=require('jsonwebtoken');
 const userServices=require("../services/userServices");
 const { use } = require("../routes/user");
 
-exports.getMainPage = async(req, res) => {
-    try{
-        return res.sendFile('mainPage.html', { root: 'views' });
-    }
-    catch(error){
-        console.log(error);
-    }
-}
-exports.getPremiumMainPage=(req,res)=>{
-    try{
-        return res.sendFile('premiumUserMainPage.html', { root: 'views' });
-    }
-    catch(error){
-        console.log(error);
-    }
-    
-}
-
-
-
-function isNotValidInput(string){
-    if(string.lenth===0 || string==undefined){
-        return true;
-    }
-    return false;
-}
 
 
 // signup part
 exports.userSignup=async(req,res)=>{
     try{
         const {name,phoneNumber,email,password}=req.body;
-        if(isNotValidInput(name) || isNotValidInput(email) || isNotValidInput(phoneNumber) || isNotValidInput(password)){
+        if(isNotValidInput([name,email,phoneNumber,password])){
             return res.status(400).json({error:"Bad parameter"});
         }
         const user=await userServices.getUserbyemail(email);
         if(user){
-            return res.status(401).json({error:"user already exists"});
+            return res.status(409).json({error:"user already exists"});
         }
         const saltrounds=10;
         bcrypt.hash(password,saltrounds,async(err,hash)=>{
@@ -64,9 +38,9 @@ function getAccessToken(id,isPremiumUser){
 exports.userLogin=async (req,res,next)=>{
     try{
         const {email,password}=req.body;
-        if(isNotValidInput(email) || isNotValidInput(password)){
+        if(isNotValidInput([email,password])){
             return res.status(400).json({error:"bad parameters"});
-        }
+        } 
         const response = await userServices.getUserbyemail(email);
         if(!response){
             return res.status(404).json({error:"user doesn't exists"});
@@ -95,4 +69,33 @@ exports.getUserDetails=async(req,res)=>{
     catch(error){
         res.status(500).json({error:error});
     }
+}
+
+exports.getMainPage = async(req, res) => {
+    try{
+        return res.sendFile('mainPage.html', { root: 'views' });
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+exports.getPremiumMainPage=(req,res)=>{
+    try{
+        return res.sendFile('premiumUserMainPage.html', { root: 'views' });
+    }
+    catch(error){
+        console.log(error);
+    }
+    
+}
+
+
+
+function isNotValidInput(strings){
+    for(let string in strings){
+        if(string.lenth===0 || string==undefined){
+            return true;
+        }
+    }
+    return false;
 }
